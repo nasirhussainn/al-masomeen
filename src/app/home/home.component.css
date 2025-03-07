@@ -7,7 +7,7 @@
   color: white;
   height: 60vh;
   padding: 2rem;
-  background-image: url('https://images.unsplash.com/photo-1602490333481-e419e649bf1c?w=1080&auto=format&fit=crop&q=80&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTYzfHxpc2xhbWljfGVufDB8MHwwfHx8MA%3D%3D'); /* Updated Background Image */
+  background-image: url('https://images.unsplash.com/photo-1602490333481-e419e649bf1c?w=1080&auto=format&fit=crop&q=80&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTYzfHxpc2xhbWljfGVufDB8MHwwfHx8MA%3D%3D');
   background-size: cover;
   background-position: center;
 
@@ -23,7 +23,7 @@
     }
 
     .btn-primary {
-      background-color:  #0d6efd;
+      background-color: #0d6efd;
       color: #ffffff;
       padding: 0.75rem 1.5rem;
       border: none;
@@ -32,8 +32,29 @@
       text-decoration: none;
 
       &:hover {
-        background-color:  #0063f7;
+        background-color: #0063f7;
         color: #fff;
+      }
+    }
+  }
+
+  /* Mobile Responsive Styles */
+  @media (max-width: 768px) {
+    height: 50vh;
+    padding: 1rem;
+
+    .hero-content {
+      h1 {
+        font-size: 2.5rem;
+      }
+
+      p {
+        font-size: 1.2rem;
+      }
+
+      .btn-primary {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
       }
     }
   }
@@ -45,27 +66,40 @@
   margin: 3rem 0;
   padding: 2rem;
   background-color: #f8f9fa;
-  
+
   .feature {
     text-align: center;
     padding: 1rem;
     width: 30%;
     background-color: #ffffff;
     border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    background-size: cover; /* Ensures the image covers the card */
-    background-position: center; /* Centers the image */
-    color: white; /* Ensures text stands out on the background */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-size: cover;
+    background-position: center;
+    color: white;
 
     h2 {
       font-size: 1.5rem;
       margin-bottom: 1rem;
-      color: white; /* Text color */
+      color: white;
     }
 
     p {
       font-size: 1rem;
-      color: white; /* Text color */
+      color: white;
+    }
+  }
+
+  /* Mobile Responsive Styles */
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1rem;
+
+    .feature {
+      width: 90%;
+      padding: 1.5rem;
     }
   }
 }
@@ -74,7 +108,7 @@
   text-align: center;
   padding: 3rem 2rem;
   background-color: #f8f9fa;
-  
+
   .about-img {
     width: 100%;
     height: 300px;
@@ -109,6 +143,28 @@
       color: #ffc107;
     }
   }
+
+  /* Mobile Responsive Styles */
+  @media (max-width: 768px) {
+    padding: 2rem 1rem;
+
+    .about-img {
+      height: 200px;
+    }
+
+    h2 {
+      font-size: 1.8rem;
+    }
+
+    p {
+      font-size: 1rem;
+    }
+
+    .btn-secondary {
+      padding: 0.5rem 1rem;
+      font-size: 0.9rem;
+    }
+  }
 }
 
 .home-contact {
@@ -140,6 +196,24 @@
       background-color: #004085;
     }
   }
+
+  /* Mobile Responsive Styles */
+  @media (max-width: 768px) {
+    padding: 2rem 1rem;
+
+    h2 {
+      font-size: 1.8rem;
+    }
+
+    p {
+      font-size: 1rem;
+    }
+
+    .btn-primary {
+      padding: 0.5rem 1rem;
+      font-size: 0.9rem;
+    }
+  }
 }
 
 .home-testimonials {
@@ -166,7 +240,7 @@
       border-radius: 10px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       padding: 2rem;
-      width: 300px; /* Adjust the width of each card */
+      width: 300px;
       text-align: center;
       scroll-snap-align: center;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -203,13 +277,20 @@
     }
   }
 
-  @media screen and (max-width: 768px) {
+  /* Mobile Responsive Styles */
+  @media (max-width: 768px) {
+    padding: 2rem 1rem;
+
+    h2 {
+      font-size: 2rem;
+    }
+
     .testimonials-container {
       flex-direction: column;
       align-items: center;
 
       .testimonial {
-        width: 80%;
+        width: 90%;
         margin-bottom: 2rem;
       }
     }
@@ -231,24 +312,19 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    flex-wrap: nowrap; /* Ensure all cards stay in one row */
+    flex-wrap: nowrap;
     gap: 2rem;
-
-    @media (max-width: 768px) {
-      flex-wrap: wrap; /* Allow wrapping on smaller screens */
-    }
   }
 
   .stats-card {
     background: linear-gradient(135deg, #5398ff, #6610f2);
     color: white;
     padding: 3rem 2rem;
-    width: 25%; /* Set fixed width for uniform sizing */
+    width: 25%;
     border-radius: 15px;
     text-align: center;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s ease;
-    position: relative;
 
     &:hover {
       transform: translateY(-5px);
@@ -271,6 +347,25 @@
       color: #e0e0e0;
     }
   }
+
+  /* Mobile Responsive Styles */
+  @media (max-width: 768px) {
+    padding: 2rem 1rem;
+
+    h2 {
+      font-size: 2rem;
+    }
+
+    .stats-container {
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .stats-card {
+      width: 90%;
+      padding: 2rem 1rem;
+    }
+  }
 }
 
 .top-courses {
@@ -281,7 +376,7 @@
     font-size: 2.5rem;
     margin-bottom: 2rem;
     color: #2c3e50;
-    font-family: 'Amiri', serif; /* Use an Arabic-style font for titles */
+    font-family: 'Amiri', serif;
   }
 
   .courses-container {
@@ -298,7 +393,7 @@
     text-align: left;
     border-radius: 15px;
     width: 25%;
-    min-width: 250px; /* Ensure cards fit smaller screens */
+    min-width: 250px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     font-family: 'Roboto', sans-serif;
 
@@ -330,19 +425,23 @@
       }
     }
   }
-}
 
-.btn-primary {
-  background-color:  #0d6efd;
-  color: #ffffff;
-  padding: 0.75rem 1.5rem;
-  border: none;
-  border-radius: 5px;
-  font-weight: bold;
-  text-decoration: none;
+  /* Mobile Responsive Styles */
+  @media (max-width: 768px) {
+    padding: 2rem 1rem;
 
-  &:hover {
-    background-color: #003fe0;
-    color: #fff;
+    h2 {
+      font-size: 2rem;
+    }
+
+    .courses-container {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .course-card {
+      width: 90%;
+      padding: 1.5rem;
+    }
   }
 }
