@@ -1,29 +1,89 @@
 nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #0d6efd;
-    padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #0d6efd;
+  padding: 1rem 2rem;
+  color: white;
+
+  a {
     color: white;
-  
-    a {
-      color: white;
-      text-decoration: none;
-      margin: 0 1rem;
-      font-weight: bold;
-  
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-  
-    .nav-logo {
-      font-size: 1.5rem;
-      font-weight: bold;
-    }
-  
-    .nav-links {
-      display: flex;
+    text-decoration: none;
+    margin: 0 1rem;
+    font-weight: bold;
+
+    &:hover {
+      text-decoration: underline;
     }
   }
-  
+
+  .nav-logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+  }
+
+  /* Hamburger Menu Icon (Hidden by Default) */
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+
+    span {
+      width: 25px;
+      height: 3px;
+      background-color: white;
+      margin: 4px 0;
+      transition: 0.3s;
+    }
+  }
+
+  /* Mobile Responsive Styles */
+  @media (max-width: 768px) {
+    padding: 1rem;
+
+    .nav-links {
+      display: none; /* Hide the links by default on mobile */
+      flex-direction: column;
+      position: absolute;
+      top: 60px; /* Adjust based on your nav height */
+      left: 0;
+      width: 100%;
+      background-color: #0d6efd;
+      text-align: center;
+      z-index: 1000;
+
+      a {
+        margin: 1rem 0;
+        padding: 0.5rem;
+      }
+    }
+
+    .nav-toggle {
+      display: flex; /* Show the hamburger menu icon */
+    }
+
+    /* Active State for Mobile Menu */
+    &.active {
+      .nav-links {
+        display: flex; /* Show the links when the menu is active */
+      }
+
+      .nav-toggle span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+      }
+
+      .nav-toggle span:nth-child(2) {
+        opacity: 0;
+      }
+
+      .nav-toggle span:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -5px);
+      }
+    }
+  }
+}
