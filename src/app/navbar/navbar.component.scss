@@ -1,89 +1,103 @@
+/* Navbar Styles */
 nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #0d6efd;
+  background: linear-gradient(135deg, #0d6efd, #6610f2);
   padding: 1rem 2rem;
   color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
 
-  a {
-    color: white;
-    text-decoration: none;
-    margin: 0 1rem;
-    font-weight: bold;
+.nav-logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+}
 
-    &:hover {
-      text-decoration: underline;
-    }
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: #ffc107;
   }
 
-  .nav-logo {
-    font-size: 1.5rem;
-    font-weight: bold;
+  &.active {
+    color: #ffc107;
+    text-decoration: underline;
+  }
+}
+
+/* Hamburger Menu Icon */
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  gap: 5px;
+
+  span {
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+  nav {
+    padding: 1rem;
   }
 
   .nav-links {
-    display: flex;
-    align-items: center;
-  }
-
-  /* Hamburger Menu Icon (Hidden by Default) */
-  .nav-toggle {
-    display: none;
+    display: none; /* Hide the links by default on mobile */
     flex-direction: column;
-    cursor: pointer;
-
-    span {
-      width: 25px;
-      height: 3px;
-      background-color: white;
-      margin: 4px 0;
-      transition: 0.3s;
-    }
+    position: absolute;
+    top: 60px; /* Adjust based on your nav height */
+    left: 0;
+    width: 100%;
+    background: linear-gradient(135deg, #0d6efd, #6610f2);
+    text-align: center;
+    padding: 1rem 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 999;
   }
 
-  /* Mobile Responsive Styles */
-  @media (max-width: 768px) {
-    padding: 1rem;
+  .nav-links a {
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+  }
 
-    .nav-links {
-      display: none; /* Hide the links by default on mobile */
-      flex-direction: column;
-      position: absolute;
-      top: 60px; /* Adjust based on your nav height */
-      left: 0;
-      width: 100%;
-      background-color: #0d6efd;
-      text-align: center;
-      z-index: 1000;
+  .nav-toggle {
+    display: flex; /* Show the hamburger menu icon */
+  }
 
-      a {
-        margin: 1rem 0;
-        padding: 0.5rem;
-      }
-    }
+  /* Active State for Mobile Menu */
+  nav.active .nav-links {
+    display: flex; /* Show the links when the menu is active */
+  }
 
-    .nav-toggle {
-      display: flex; /* Show the hamburger menu icon */
-    }
+  nav.active .nav-toggle span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
 
-    /* Active State for Mobile Menu */
-    &.active {
-      .nav-links {
-        display: flex; /* Show the links when the menu is active */
-      }
+  nav.active .nav-toggle span:nth-child(2) {
+    opacity: 0;
+  }
 
-      .nav-toggle span:nth-child(1) {
-        transform: rotate(45deg) translate(5px, 5px);
-      }
-
-      .nav-toggle span:nth-child(2) {
-        opacity: 0;
-      }
-
-      .nav-toggle span:nth-child(3) {
-        transform: rotate(-45deg) translate(5px, -5px);
-      }
-    }
+  nav.active .nav-toggle span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
   }
 }
