@@ -1,78 +1,52 @@
-// home.component.ts
-import { Component, AfterViewInit } from '@angular/core';
-import { NavbarComponent } from '../navbar/navbar.component';
-import { FooterComponent } from '../footer/footer.component';
-import { NgForOf } from '@angular/common';
+import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { NgForOf, CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-home',
+  standalone: true,
+  imports: [RouterLink, NgForOf, CommonModule],
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css'],
-  imports: [NavbarComponent, FooterComponent, NgForOf]
+  styleUrls: ['./home.component.css']
 })
 
-export class HomeComponent implements AfterViewInit {
-
-  ngAfterViewInit() {
-    const statsSection = document.getElementById("statsSection");
-    const stats = [
-      { id: "graduateStudents", targetValue: 1500 },
-      { id: "enrolledStudents", targetValue: 5000 },
-      { id: "countriesCount", targetValue: 25 },
-    ];
-
-    const animateValue = (id: string, start: number, end: number, duration: number) => {
-      const obj = document.getElementById(id);
-      if (!obj) return;
-      const range = end - start;
-      let startTime: number | null = null;
-
-      const step = (timestamp: number) => {
-        if (!startTime) startTime = timestamp;
-        const progress = Math.min((timestamp - startTime) / duration, 1);
-        obj.textContent = Math.floor(progress * range + start).toString();
-        if (progress < 1) {
-          requestAnimationFrame(step);
-        }
-      };
-
-      requestAnimationFrame(step);
-    };
-
-    const observer = new IntersectionObserver(
-      (entries, observer) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            stats.forEach((stat) =>
-              animateValue(stat.id, 0, stat.targetValue, 2000)
-            );
-            observer.disconnect(); // Stop observing after animation triggers
-          }
-        });
-      },
-      { threshold: 0.5 } // Trigger animation when 50% of the section is visible
-    );
-
-    if (statsSection) {
-      observer.observe(statsSection);
-    }
-  }
-
+export class HomeComponent {
   topCourses = [
     {
-      title: 'Tajweed Basics',
-      description: 'Master the rules of Tajweed to recite the Quran with proper pronunciation.',
-      // link: '/courses',
+      title: 'Tajweed & Recitation',
+      description: 'Master the beautiful art of Quranic recitation with proper pronunciation and melodious rhythm.',
+      level: 'Beginner',
+      duration: '3 Months'
     },
     {
-      title: 'Quran Memorization',
-      description: 'Structured guidance for memorizing the Quran effectively and efficiently.',
-      // link: '/courses',
+      title: 'Quran Memorization (Hifz)',
+      description: 'Structured guidance and proven methods for memorizing the Holy Quran effectively.',
+      level: 'All Levels',
+      duration: '2-5 Years'
     },
     {
-      title: 'Quran Translation',
-      description: 'Understand the meanings and context of the Quran in your native language.',
-      // link: '/courses',
+      title: 'Islamic Studies',
+      description: 'Comprehensive understanding of Islamic principles, history, and contemporary applications.',
+      level: 'Intermediate',
+      duration: '6 Months'
     },
+    {
+      title: 'Arabic Language',
+      description: 'Learn Classical Arabic to understand the Quran in its original language and beauty.',
+      level: 'Beginner',
+      duration: '12 Months'
+    },
+    {
+      title: 'Tafseer & Commentary',
+      description: 'Deep dive into Quranic interpretation and commentary by renowned Islamic scholars.',
+      level: 'Advanced',
+      duration: '18 Months'
+    },
+    {
+      title: 'Islamic Ethics & Spirituality',
+      description: 'Develop Islamic character and spiritual connection through Quranic guidance.',
+      level: 'All Levels',
+      duration: '4 Months'
+    }
   ];
 }
