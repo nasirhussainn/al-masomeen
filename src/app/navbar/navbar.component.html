@@ -1,14 +1,122 @@
-<nav [class.active]="isMenuActive">
-  <div class="nav-logo">Al-Masomeen Quran Academy</div>
-  <div class="nav-links" id="navLinks">
-    <a routerLink="/" routerLinkActive="active">Home</a>
-    <a routerLink="/about-us" routerLinkActive="active">About Us</a>
-    <a routerLink="/courses" routerLinkActive="active">Courses</a>
-    <a routerLink="/contact-us" routerLinkActive="active">Contact Us</a>
+<nav class="bg-islamic-primary shadow-lg sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+      <!-- Logo and Brand -->
+      <div class="flex items-center">
+        <a routerLink="/" class="flex items-center space-x-2">
+          <div class="text-islamic-secondary text-2xl">☪</div>
+          <span class="font-heading text-xl font-bold text-white">Al-Masomeen Quran Academy</span>
+        </a>
+      </div>
+
+      <!-- Desktop Navigation -->
+      <div class="hidden md:block">
+        <div class="ml-10 flex items-baseline space-x-4">
+          <a routerLink="/" 
+             routerLinkActive="bg-islamic-secondary text-islamic-primary" 
+             [routerLinkActiveOptions]="{exact:true}"
+             class="text-white hover:bg-islamic-accent hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-all duration-300">
+            Home
+          </a>
+          <a routerLink="/about-us" 
+             routerLinkActive="bg-islamic-secondary text-islamic-primary"
+             class="text-white hover:bg-islamic-accent hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-all duration-300">
+            About Us
+          </a>
+          <a routerLink="/courses" 
+             routerLinkActive="bg-islamic-secondary text-islamic-primary"
+             class="text-white hover:bg-islamic-accent hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-all duration-300">
+            Courses
+          </a>
+          <a routerLink="/book-demo" 
+             routerLinkActive="bg-islamic-secondary text-islamic-primary"
+             class="text-white hover:bg-islamic-accent hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-all duration-300">
+            Book Demo
+          </a>
+          <a routerLink="/faq" 
+             routerLinkActive="bg-islamic-secondary text-islamic-primary"
+             class="text-white hover:bg-islamic-accent hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-all duration-300">
+            FAQ
+          </a>
+          <a routerLink="/blog" 
+             routerLinkActive="bg-islamic-secondary text-islamic-primary"
+             class="text-white hover:bg-islamic-accent hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-all duration-300">
+            Blog
+          </a>
+          <a routerLink="/contact-us" 
+             routerLinkActive="bg-islamic-secondary text-islamic-primary"
+             class="text-white hover:bg-islamic-accent hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-all duration-300">
+            Contact
+          </a>
+        </div>
+      </div>
+
+      <!-- Mobile menu button -->
+      <div class="md:hidden">
+        <button (click)="toggleMenu()" 
+                type="button" 
+                class="bg-islamic-primary inline-flex items-center justify-center p-2 rounded-md text-white hover:text-islamic-secondary hover:bg-islamic-accent focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                aria-expanded="false">
+          <span class="sr-only">Open main menu</span>
+          <!-- Hamburger icon -->
+          <svg [class.hidden]="isMenuOpen" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <!-- Close icon -->
+          <svg [class.hidden]="!isMenuOpen" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    </div>
   </div>
-  <div class="nav-toggle" id="navToggle" aria-label="Toggle navigation" (click)="toggleMenu()">
-    <span></span>
-    <span></span>
-    <span></span>
+
+  <!-- Mobile menu -->
+  <div [class.hidden]="!isMenuOpen" class="md:hidden">
+    <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-islamic-primary border-t border-islamic-accent">
+      <a routerLink="/" 
+         (click)="closeMenu()"
+         routerLinkActive="bg-islamic-secondary text-islamic-primary" 
+         [routerLinkActiveOptions]="{exact:true}"
+         class="text-white hover:bg-islamic-accent hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+        Home
+      </a>
+      <a routerLink="/about-us" 
+         (click)="closeMenu()"
+         routerLinkActive="bg-islamic-secondary text-islamic-primary"
+         class="text-white hover:bg-islamic-accent hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+        About Us
+      </a>
+      <a routerLink="/courses" 
+         (click)="closeMenu()"
+         routerLinkActive="bg-islamic-secondary text-islamic-primary"
+         class="text-white hover:bg-islamic-accent hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+        Courses
+      </a>
+      <a routerLink="/book-demo" 
+         (click)="closeMenu()"
+         routerLinkActive="bg-islamic-secondary text-islamic-primary"
+         class="text-white hover:bg-islamic-accent hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+        Book Demo
+      </a>
+      <a routerLink="/faq" 
+         (click)="closeMenu()"
+         routerLinkActive="bg-islamic-secondary text-islamic-primary"
+         class="text-white hover:bg-islamic-accent hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+        FAQ
+      </a>
+      <a routerLink="/blog" 
+         (click)="closeMenu()"
+         routerLinkActive="bg-islamic-secondary text-islamic-primary"
+         class="text-white hover:bg-islamic-accent hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+        Blog
+      </a>
+      <a routerLink="/contact-us" 
+         (click)="closeMenu()"
+         routerLinkActive="bg-islamic-secondary text-islamic-primary"
+         class="text-white hover:bg-islamic-accent hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+        Contact
+      </a>
+    </div>
   </div>
 </nav>

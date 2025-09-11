@@ -1,1 +1,72 @@
 /* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Global Islamic design styles */
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #fefdfb;
+  color: #1f2937;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Playfair Display', serif;
+  color: #065f46;
+}
+
+/* Custom Islamic design components */
+.islamic-gradient {
+  background: linear-gradient(135deg, #065f46 0%, #0d9488 100%);
+}
+
+.gold-gradient {
+  background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
+}
+
+.islamic-shadow {
+  box-shadow: 0 10px 25px -5px rgba(6, 95, 70, 0.1), 0 10px 10px -5px rgba(6, 95, 70, 0.04);
+}
+
+.islamic-border {
+  border: 2px solid #d97706;
+  border-image: linear-gradient(45deg, #d97706, #065f46) 1;
+}
+
+/* Arabic text styling */
+.arabic-text {
+  font-family: 'Amiri', serif;
+  direction: rtl;
+  text-align: right;
+}
+
+/* Islamic decorative elements */
+.crescent-icon::before {
+  content: '☪';
+  color: #d97706;
+  font-size: 1.2em;
+  margin-right: 0.5rem;
+}
+
+/* Smooth transitions */
+* {
+  transition: all 0.3s ease;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #fefdfb;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #065f46;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #0d9488;
+}
