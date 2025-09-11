@@ -5,7 +5,7 @@
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-gray-200;
   }
   
   body {
@@ -96,7 +96,7 @@
 
 /* Islamic geometric patterns */
 .geometric-pattern {
-  background-image: 
+  background: 
     repeating-linear-gradient(
       45deg,
       transparent,
@@ -110,5 +110,6 @@
       transparent 10px,
       rgba(217, 119, 6, 0.05) 10px,
       rgba(217, 119, 6, 0.05) 20px
-    );
+    ),
+    linear-gradient(135deg, #064e3b, #065f46, #115e59);
 }
