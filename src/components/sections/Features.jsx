@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { BookOpen, Users, Clock, Award, Heart, Globe } from 'lucide-react';
 import Card from '../ui/Card';
@@ -114,9 +115,11 @@ const Features = () => {
             <p className="text-primary-100 mb-6 max-w-2xl">
               Join thousands of students who have transformed their lives through authentic Islamic education.
             </p>
-            <button className="btn-secondary">
-              Start Learning Today
-            </button>
+            <Link to="/courses">
+              <button className="btn-secondary">
+                Start Learning Today
+              </button>
+            </Link>
           </div>
         </motion.div>
       </div>

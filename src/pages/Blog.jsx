@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Calendar, Clock, User, ArrowRight } from 'lucide-react';
 import Button from '../components/ui/Button';
@@ -137,9 +138,11 @@ const Blog = () => {
                     </div>
                   </div>
                   
-                  <Button variant="primary" icon={ArrowRight}>
-                    Read Full Article
-                  </Button>
+                  <Link to={`/blog/${post.id}`}>
+                    <Button variant="primary" icon={ArrowRight}>
+                      Read Full Article
+                    </Button>
+                  </Link>
                 </div>
                 
                 <div className="bg-gradient-to-br from-primary-800 to-accent-800 h-64 lg:h-96 flex items-center justify-center">
@@ -219,9 +222,11 @@ const Blog = () => {
                   
                   <div className="flex items-center justify-between">
                     <span className="text-sm text-gray-500">{post.date}</span>
-                    <Button size="sm" variant="ghost" icon={ArrowRight}>
-                      Read More
-                    </Button>
+                    <Link to={`/blog/${post.id}`}>
+                      <Button size="sm" variant="ghost" icon={ArrowRight}>
+                        Read More
+                      </Button>
+                    </Link>
                   </div>
                 </div>
               </motion.article>

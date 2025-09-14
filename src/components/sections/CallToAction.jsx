@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, BookOpen, Users } from 'lucide-react';
 import Button from '../ui/Button';
@@ -38,23 +39,27 @@ const CallToAction = () => {
 
           {/* Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-            <Button 
-              size="lg" 
-              variant="secondary"
-              className="group"
-            >
-              Book Free Trial Class
-              <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-            </Button>
+            <Link to="/book-demo">
+              <Button 
+                size="lg" 
+                variant="secondary"
+                className="group"
+              >
+                Book Free Trial Class
+                <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+              </Button>
+            </Link>
             
-            <Button 
-              size="lg" 
-              variant="outline"
-              className="border-white text-white hover:bg-white hover:text-primary-800"
-            >
-              <Users className="mr-2 h-5 w-5" />
-              Join Our Community
-            </Button>
+            <Link to="/contact">
+              <Button 
+                size="lg" 
+                variant="outline"
+                className="border-white text-white hover:bg-white hover:text-primary-800"
+              >
+                <Users className="mr-2 h-5 w-5" />
+                Join Our Community
+              </Button>
+            </Link>
           </div>
 
           {/* Stats Row */}
