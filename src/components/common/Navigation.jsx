@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, BookOpen, Users, MessageCircle, Phone, Calendar, HelpCircle, FileText } from 'lucide-react';
+import { Menu, X, BookOpen, Users, MessageCircle, Phone, Calendar, HelpCircle, FileText, User, LogOut } from 'lucide-react';
 import Button from '../ui/Button';
+import { useAuth } from '../../contexts/AuthContext';
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+  const { isAuthenticated, student, logout } = useAuth();
 
   const navigationItems = [
     { name: 'Home', href: '/', icon: BookOpen },
@@ -17,6 +19,12 @@ const Navigation = () => {
     { name: 'Blog', href: '/blog', icon: FileText },
     { name: 'FAQ', href: '/faq', icon: HelpCircle },
     { name: 'Contact', href: '/contact', icon: Phone }
+  ];
+
+  const studentNavigationItems = [
+    { name: 'Dashboard', href: '/student/dashboard', icon: BookOpen },
+    { name: 'My Courses', href: '/student/courses', icon: BookOpen },
+    { name: 'Profile', href: '/student/profile', icon: User },
   ];
 
   useEffect(() => {
@@ -73,7 +81,7 @@ const Navigation = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center space-x-8">
-            {navigationItems.map((item) => {
+            {(isAuthenticated ? studentNavigationItems : navigationItems).map((item) => {
               const isActive = location.pathname === item.href;
               return (
                 <Link
@@ -105,15 +113,45 @@ const Navigation = () => {
 
           {/* CTA Button & Mobile Menu Toggle */}
           <div className="flex items-center gap-4">
-            <Link to="/book-demo" className="hidden md:block">
-              <Button 
-                variant={scrolled ? "primary" : "secondary"}
-                size="md"
-                icon={Calendar}
-              >
-                Book Free Trial
-              </Button>
-            </Link>
+            {isAuthenticated ? (
+              <div className="hidden md:flex items-center gap-4">
+                <div className={`flex items-center gap-2 ${
+                  scrolled ? 'text-charcoal' : 'text-white'
+                }`}>
+                  <span className="text-lg">{student?.avatar}</span>
+                  <span className="text-sm font-medium">{student?.name}</span>
+                </div>
+                <Button 
+                  variant={scrolled ? "outline" : "secondary"}
+                  size="sm"
+                  icon={LogOut}
+                  onClick={logout}
+                >
+                  Logout
+                </Button>
+              </div>
+            ) : (
+              <div className="hidden md:flex items-center gap-3">
+                <Link to="/student/login">
+                  <Button 
+                    variant={scrolled ? "outline" : "secondary"}
+                    size="md"
+                    icon={User}
+                  >
+                    Student Login
+                  </Button>
+                </Link>
+                <Link to="/book-demo">
+                  <Button 
+                    variant={scrolled ? "primary" : "secondary"}
+                    size="md"
+                    icon={Calendar}
+                  >
+                    Book Free Trial
+                  </Button>
+                </Link>
+              </div>
+            )}
 
             {/* Mobile Menu Button */}
             <button
@@ -142,7 +180,7 @@ const Navigation = () => {
           >
             <div className="container-padding py-6">
               <div className="space-y-4">
-                {navigationItems.map((item) => {
+                {(isAuthenticated ? studentNavigationItems : navigationItems).map((item) => {
                   const isActive = location.pathname === item.href;
                   const Icon = item.icon;
                   return (
@@ -163,16 +201,49 @@ const Navigation = () => {
                 })}
                 
                 <div className="pt-4 border-t border-primary-200">
-                  <Link to="/book-demo" onClick={closeMenu}>
-                    <Button 
-                      variant="primary" 
-                      size="lg" 
-                      className="w-full"
-                      icon={Calendar}
-                    >
-                      Book Free Trial Class
-                    </Button>
-                  </Link>
+                  {isAuthenticated ? (
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-2 px-3 py-2">
+                        <span className="text-lg">{student?.avatar}</span>
+                        <span className="text-sm font-medium text-charcoal">{student?.name}</span>
+                      </div>
+                      <Button 
+                        variant="outline" 
+                        size="lg" 
+                        className="w-full"
+                        icon={LogOut}
+                        onClick={() => {
+                          logout();
+                          closeMenu();
+                        }}
+                      >
+                        Logout
+                      </Button>
+                    </div>
+                  ) : (
+                    <div className="space-y-3">
+                      <Link to="/student/login" onClick={closeMenu}>
+                        <Button 
+                          variant="outline" 
+                          size="lg" 
+                          className="w-full"
+                          icon={User}
+                        >
+                          Student Login
+                        </Button>
+                      </Link>
+                      <Link to="/book-demo" onClick={closeMenu}>
+                        <Button 
+                          variant="primary" 
+                          size="lg" 
+                          className="w-full"
+                          icon={Calendar}
+                        >
+                          Book Free Trial Class
+                        </Button>
+                      </Link>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
