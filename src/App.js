@@ -1,8 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
+import { InstructorAuthProvider } from './contexts/InstructorAuthContext';
 import Layout from './components/common/Layout';
 import ProtectedRoute from './components/common/ProtectedRoute';
+import InstructorProtectedRoute from './components/common/InstructorProtectedRoute';
 import Home from './pages/Home';
 import About from './pages/About';
 import Courses from './pages/Courses';
@@ -19,24 +21,70 @@ import StudentDashboard from './pages/student/Dashboard';
 import StudentCourses from './pages/student/MyCourses';
 import StudentProfile from './pages/student/Profile';
 import StudentCourseDetail from './pages/student/CourseDetail';
+// Instructor Portal Pages
+import InstructorLogin from './pages/instructor/Login';
+import InstructorDashboard from './pages/instructor/Dashboard';
+import InstructorProfile from './pages/instructor/Profile';
+import InstructorCourseDetail from './pages/instructor/CourseDetail';
 import './index.css';
 
 function App() {
   return (
     <Router>
       <AuthProvider>
-        <Layout>
+        <InstructorAuthProvider>
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/courses" element={<Courses />} />
-            <Route path="/course/:id" element={<CourseDetail />} />
-            <Route path="/book-demo" element={<BookDemo />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/faq" element={<FAQ />} />
-            <Route path="/blog" element={<Blog />} />
-            <Route path="/blog/:id" element={<BlogPost />} />
-            <Route path="/testimonials" element={<Testimonials />} />
+            {/* Public routes with main site layout */}
+            <Route path="/" element={
+              <Layout>
+                <Home />
+              </Layout>
+            } />
+            <Route path="/about" element={
+              <Layout>
+                <About />
+              </Layout>
+            } />
+            <Route path="/courses" element={
+              <Layout>
+                <Courses />
+              </Layout>
+            } />
+            <Route path="/course/:id" element={
+              <Layout>
+                <CourseDetail />
+              </Layout>
+            } />
+            <Route path="/book-demo" element={
+              <Layout>
+                <BookDemo />
+              </Layout>
+            } />
+            <Route path="/contact" element={
+              <Layout>
+                <Contact />
+              </Layout>
+            } />
+            <Route path="/faq" element={
+              <Layout>
+                <FAQ />
+              </Layout>
+            } />
+            <Route path="/blog" element={
+              <Layout>
+                <Blog />
+              </Layout>
+            } />
+            <Route path="/blog/:id" element={
+              <Layout>
+                <BlogPost />
+              </Layout>
+            } />
+            <Route path="/testimonials" element={
+              <Layout>
+                <Testimonials />
+              </Layout>
+            } />
             
             {/* Student Portal Routes */}
             <Route path="/student/login" element={<StudentLogin />} />
@@ -60,8 +108,26 @@ function App() {
                 <StudentCourseDetail />
               </ProtectedRoute>
             } />
+
+            {/* Instructor Portal Routes - Separate from main site */}
+            <Route path="/instructor/login" element={<InstructorLogin />} />
+            <Route path="/instructor/dashboard" element={
+              <InstructorProtectedRoute>
+                <InstructorDashboard />
+              </InstructorProtectedRoute>
+            } />
+            <Route path="/instructor/profile" element={
+              <InstructorProtectedRoute>
+                <InstructorProfile />
+              </InstructorProtectedRoute>
+            } />
+            <Route path="/instructor/course/:courseId" element={
+              <InstructorProtectedRoute>
+                <InstructorCourseDetail />
+              </InstructorProtectedRoute>
+            } />
           </Routes>
-        </Layout>
+        </InstructorAuthProvider>
       </AuthProvider>
     </Router>
   );
