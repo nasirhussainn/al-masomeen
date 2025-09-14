@@ -8,6 +8,8 @@ import BookDemo from './pages/BookDemo';
 import Contact from './pages/Contact';
 import FAQ from './pages/FAQ';
 import Blog from './pages/Blog';
+import BlogPost from './pages/BlogPost';
+import CourseDetail from './pages/CourseDetail';
 import Testimonials from './pages/Testimonials';
 import './index.css';
 
@@ -19,10 +21,12 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/courses" element={<Courses />} />
+          <Route path="/course/:id" element={<CourseDetail />} />
           <Route path="/book-demo" element={<BookDemo />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:id" element={<BlogPost />} />
           <Route path="/testimonials" element={<Testimonials />} />
         </Routes>
       </Layout>

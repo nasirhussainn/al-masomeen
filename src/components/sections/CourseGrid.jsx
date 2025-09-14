@@ -1,6 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { BookOpen, Clock, Users, Star, ArrowRight } from 'lucide-react';
+import { Clock, Users, Star, ArrowRight } from 'lucide-react';
 import Button from '../ui/Button';
 
 const CourseGrid = () => {
@@ -8,6 +9,7 @@ const CourseGrid = () => {
     {
       id: 1,
       title: "Quran Recitation & Tajweed",
+      slug: "quran-recitation-tajweed",
       description: "Master the art of beautiful Quran recitation with proper pronunciation and Tajweed rules.",
       duration: "6-12 months",
       students: "200+",
@@ -20,6 +22,7 @@ const CourseGrid = () => {
     {
       id: 2,
       title: "Quran Memorization (Hifz)",
+      slug: "quran-memorization-hifz",
       description: "Comprehensive Hifz program with proven memorization techniques and regular revision.",
       duration: "2-4 years",
       students: "150+",
@@ -32,6 +35,7 @@ const CourseGrid = () => {
     {
       id: 3,
       title: "Islamic Studies",
+      slug: "islamic-studies",
       description: "Comprehensive Islamic education covering Aqeedah, Fiqh, Seerah, and Islamic history.",
       duration: "9-15 months",
       students: "120+",
@@ -134,13 +138,15 @@ const CourseGrid = () => {
                     </div>
                   </div>
                   
-                  <Button 
-                    variant="primary" 
-                    className="w-full group"
-                    icon={ArrowRight}
-                  >
-                    Learn More
-                  </Button>
+                  <Link to={`/course/${course.slug}`}>
+                    <Button 
+                      variant="primary" 
+                      className="w-full group"
+                      icon={ArrowRight}
+                    >
+                      Learn More
+                    </Button>
+                  </Link>
                 </div>
               </div>
             </motion.div>
@@ -155,14 +161,16 @@ const CourseGrid = () => {
           viewport={{ once: true }}
           className="text-center"
         >
-          <Button 
-            variant="outline" 
-            size="lg"
-            className="group"
-          >
-            View All Courses
-            <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-          </Button>
+          <Link to="/courses">
+            <Button 
+              variant="outline" 
+              size="lg"
+              className="group"
+            >
+              View All Courses
+              <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+            </Button>
+          </Link>
         </motion.div>
       </div>
     </section>
