@@ -17,6 +17,7 @@ import Blog from './pages/Blog';
 import BlogPost from './pages/BlogPost';
 import CourseDetail from './pages/CourseDetail';
 import Testimonials from './pages/Testimonials';
+import InstructorContact from './pages/InstructorContact';
 // Student Portal Pages
 import StudentLogin from './pages/student/Login';
 import StudentDashboard from './pages/student/Dashboard';
@@ -35,6 +36,7 @@ import AdminStudents from './pages/admin/Students';
 import AdminInstructors from './pages/admin/Instructors';
 import AddInstructor from './pages/admin/AddInstructor';
 import AssignStudent from './pages/admin/AssignStudent';
+import UserRegistrations from './pages/admin/UserRegistrations';
 import './index.css';
 
 function App() {
@@ -73,6 +75,11 @@ function App() {
               <Route path="/contact" element={
                 <Layout>
                   <Contact />
+                </Layout>
+              } />
+              <Route path="/instructor-contact" element={
+                <Layout>
+                  <InstructorContact />
                 </Layout>
               } />
               <Route path="/faq" element={
@@ -162,6 +169,11 @@ function App() {
               <Route path="/admin/students/assign" element={
                 <AdminProtectedRoute>
                   <AssignStudent />
+                </AdminProtectedRoute>
+              } />
+              <Route path="/admin/registrations" element={
+                <AdminProtectedRoute>
+                  <UserRegistrations />
                 </AdminProtectedRoute>
               } />
             </Routes>

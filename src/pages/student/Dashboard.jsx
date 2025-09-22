@@ -13,9 +13,10 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import Button from '../../components/ui/Button';
+import PortalLayout from '../../components/common/PortalLayout';
 
 const StudentDashboard = () => {
-  const { student } = useAuth();
+  const { student, logout } = useAuth();
 
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString('en-US', {
@@ -65,8 +66,14 @@ const StudentDashboard = () => {
     .slice(0, 3) || [];
 
   return (
-    <div className="min-h-screen bg-gray-50 pt-20">
-      <div className="max-w-7xl mx-auto container-padding py-8">
+    <PortalLayout
+      portalType="student"
+      portalTitle="Student Portal"
+      portalIcon="🏛️"
+      user={student}
+      onLogout={logout}
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Welcome Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -345,7 +352,7 @@ const StudentDashboard = () => {
           </div>
         </div>
       </div>
-    </div>
+    </PortalLayout>
   );
 };
 
