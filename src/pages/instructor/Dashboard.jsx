@@ -7,7 +7,6 @@ import {
   Clock, 
   TrendingUp,
   Calendar, 
-  User,
   ExternalLink,
   Play,
   FileText,
@@ -16,6 +15,7 @@ import {
 } from 'lucide-react';
 import { useInstructorAuth } from '../../contexts/InstructorAuthContext';
 import Button from '../../components/ui/Button';
+import PortalLayout from '../../components/common/PortalLayout';
 
 const InstructorDashboard = () => {
   const { instructor, logout } = useInstructorAuth();
@@ -78,34 +78,13 @@ const InstructorDashboard = () => {
   const recentAnnouncements = instructor?.announcements?.slice(0, 3) || [];
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Navigation Header */}
-      <nav className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
-              <div className="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center mr-3">
-                <span className="text-white text-lg">🏛️</span>
-              </div>
-              <span className="text-xl font-bold text-gray-900">Al-Masomeen Instructor Portal</span>
-            </div>
-            <div className="flex items-center gap-4">
-              <Link to="/instructor/profile">
-                <Button variant="outline" size="sm" icon={User}>
-                  Profile
-                </Button>
-              </Link>
-              <button
-                onClick={logout}
-                className="text-sm text-gray-600 hover:text-gray-900"
-              >
-                Logout
-              </button>
-            </div>
-          </div>
-        </div>
-      </nav>
-
+    <PortalLayout
+      portalType="instructor"
+      portalTitle="Instructor Portal"
+      portalIcon="🏛️"
+      user={instructor}
+      onLogout={logout}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Welcome Header */}
         <motion.div
@@ -435,7 +414,7 @@ const InstructorDashboard = () => {
           </div>
         </div>
       </div>
-    </div>
+    </PortalLayout>
   );
 };
 

@@ -18,7 +18,8 @@ const Navigation = () => {
     { name: 'Testimonials', href: '/testimonials', icon: MessageCircle },
     { name: 'Blog', href: '/blog', icon: FileText },
     { name: 'FAQ', href: '/faq', icon: HelpCircle },
-    { name: 'Contact', href: '/contact', icon: Phone }
+    { name: 'Contact', href: '/contact', icon: Phone },
+    { name: 'Become Instructor', href: '/instructor-contact', icon: User }
   ];
 
   const studentNavigationItems = [

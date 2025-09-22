@@ -17,9 +17,10 @@ import {
 } from 'lucide-react';
 import { useAdminAuth } from '../../contexts/AdminAuthContext';
 import Button from '../../components/ui/Button';
+import PortalLayout from '../../components/common/PortalLayout';
 
 const AdminInstructors = () => {
-  const { admin, updateInstructorStatus } = useAdminAuth();
+  const { admin, updateInstructorStatus, logout } = useAdminAuth();
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [specializationFilter, setSpecializationFilter] = useState('all');
@@ -111,37 +112,13 @@ const AdminInstructors = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Navigation Header */}
-      <nav className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
-              <Link to="/admin/dashboard" className="flex items-center">
-                <div className="w-8 h-8 bg-gradient-to-r from-primary-600 to-secondary-600 rounded-lg flex items-center justify-center mr-3">
-                  <span className="text-white text-lg">🏛️</span>
-                </div>
-                <span className="text-xl font-bold text-gray-900">Admin Portal</span>
-              </Link>
-              <nav className="ml-8 hidden md:flex space-x-8">
-                <Link to="/admin/dashboard" className="text-gray-600 hover:text-gray-900 transition-colors">
-                  Dashboard
-                </Link>
-                <Link to="/admin/students" className="text-gray-600 hover:text-gray-900 transition-colors">
-                  Students
-                </Link>
-                <Link to="/admin/instructors" className="text-primary-600 font-medium">
-                  Instructors
-                </Link>
-                <Link to="/admin/courses" className="text-gray-600 hover:text-gray-900 transition-colors">
-                  Courses
-                </Link>
-              </nav>
-            </div>
-          </div>
-        </div>
-      </nav>
-
+    <PortalLayout
+      portalType="admin"
+      portalTitle="Admin Portal"
+      portalIcon="🏛️"
+      user={admin}
+      onLogout={logout}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <motion.div
@@ -435,7 +412,7 @@ const AdminInstructors = () => {
           )}
         </motion.div>
       </div>
-    </div>
+    </PortalLayout>
   );
 };
 
