@@ -17,7 +17,7 @@ import {
   ChevronLeft,
   ChevronRight
 } from 'lucide-react';
-import Footer from './Footer';
+import PortalFooter from './PortalFooter';
 
 const PortalLayout = ({ 
   children, 
@@ -42,13 +42,13 @@ const PortalLayout = ({
   const getPortalColor = (portalType) => {
     switch (portalType) {
       case 'admin':
-        return 'from-primary-600 to-secondary-600';
+        return 'from-primary-600 to-primary-800';
       case 'instructor':
-        return 'from-primary-600 to-accent-600';
+        return 'from-primary-600 to-primary-800';
       case 'student':
-        return 'from-primary-600 to-accent-600';
+        return 'from-primary-600 to-primary-800';
       default:
-        return 'from-primary-600 to-secondary-600';
+        return 'from-primary-600 to-primary-800';
     }
   };
 
@@ -324,7 +324,7 @@ const PortalLayout = ({
         </main>
 
         {/* Footer */}
-        <Footer />
+        <PortalFooter portalType={portalType} />
       </div>
     </div>
   );
