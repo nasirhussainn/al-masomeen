@@ -12,13 +12,12 @@ import {
   Activity,
   AlertCircle,
   CheckCircle,
-  Settings,
   BarChart3,
-  Plus,
-  Bell
+  Plus
 } from 'lucide-react';
 import { useAdminAuth } from '../../contexts/AdminAuthContext';
 import Button from '../../components/ui/Button';
+import PortalLayout from '../../components/common/PortalLayout';
 
 const AdminDashboard = () => {
   const { admin, logout } = useAdminAuth();
@@ -48,13 +47,18 @@ const AdminDashboard = () => {
     }
   };
 
-  const getStatusColor = (status) => {
-    switch (status) {
-      case 'active': return 'text-green-600 bg-green-100';
-      case 'inactive': return 'text-red-600 bg-red-100';
-      case 'pending': return 'text-yellow-600 bg-yellow-100';
-      default: return 'text-gray-600 bg-gray-100';
-    }
+  const systemStats = admin?.systemStats || {
+    totalStudents: 0,
+    totalInstructors: 0,
+    totalCourses: 0,
+    pendingApprovals: 0,
+    totalRevenue: 0,
+    revenueGrowth: 0,
+    activeStudents: 0,
+    newStudentsThisMonth: 0,
+    activeInstructors: 0,
+    completionRate: 0,
+    completionGrowth: 0
   };
 
   const recentStudents = admin?.allStudents?.slice(0, 5) || [];
@@ -62,40 +66,13 @@ const AdminDashboard = () => {
   const recentActivities = admin?.recentActivities?.slice(0, 8) || [];
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Navigation Header */}
-      <nav className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
-              <div className="w-8 h-8 bg-gradient-to-r from-primary-600 to-secondary-600 rounded-lg flex items-center justify-center mr-3">
-                <span className="text-white text-lg">🏛️</span>
-              </div>
-              <span className="text-xl font-bold text-gray-900">Al-Masomeen Admin Portal</span>
-            </div>
-            <div className="flex items-center gap-4">
-              <button className="relative p-2 text-gray-400 hover:text-gray-600 transition-colors">
-                <Bell className="h-5 w-5" />
-                <span className="absolute -top-1 -right-1 h-4 w-4 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
-                  {admin?.systemStats?.pendingApprovals || 0}
-                </span>
-              </button>
-              <Link to="/admin/profile">
-                <Button variant="outline" size="sm" icon={User}>
-                  Profile
-                </Button>
-              </Link>
-              <button
-                onClick={logout}
-                className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
-              >
-                Logout
-              </button>
-            </div>
-          </div>
-        </div>
-      </nav>
-
+    <PortalLayout
+      portalType="admin"
+      portalTitle="Admin Portal"
+      portalIcon="🏛️"
+      user={admin}
+      onLogout={logout}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Welcome Header */}
         <motion.div
@@ -113,168 +90,118 @@ const AdminDashboard = () => {
                 {admin?.role} - Al-Masomeen Quran Academy
               </p>
               <p className="text-white/80 text-sm">
-                Managing {admin?.systemStats?.totalStudents} students, {admin?.systemStats?.totalInstructors} instructors, and {admin?.systemStats?.totalCourses} courses
+                Managing {systemStats.totalStudents} students, {systemStats.totalInstructors} instructors, and {systemStats.totalCourses} courses
               </p>
             </div>
             <div className="hidden md:flex items-center gap-6">
-              <div className="text-center">
-                <div className="text-2xl font-bold">{admin?.systemStats?.enrollmentGrowth || 0}%</div>
-                <div className="text-sm text-white/80">Growth Rate</div>
+              <div className="text-right">
+                <div className="text-2xl font-bold">{systemStats.totalStudents}</div>
+                <div className="text-sm text-white/80">Total Students</div>
               </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold">{formatCurrency(admin?.systemStats?.monthlyRevenue || 0)}</div>
-                <div className="text-sm text-white/80">Monthly Revenue</div>
+              <div className="text-right">
+                <div className="text-2xl font-bold">{systemStats.totalInstructors}</div>
+                <div className="text-sm text-white/80">Instructors</div>
+              </div>
+              <div className="text-right">
+                <div className="text-2xl font-bold">{systemStats.totalCourses}</div>
+                <div className="text-sm text-white/80">Courses</div>
               </div>
             </div>
           </div>
+
+          {/* Notifications Bar */}
+          {systemStats.pendingApprovals > 0 && (
+            <div className="mt-4 p-3 bg-white/10 rounded-lg border border-white/20 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <AlertCircle className="h-5 w-5 text-yellow-400" />
+                <span className="text-sm">
+                  {systemStats.pendingApprovals} pending approval(s) require your attention
+                </span>
+              </div>
+              <Link to="/admin/pending">
+                <Button variant="secondary" size="sm">
+                  Review
+                </Button>
+              </Link>
+            </div>
+          )}
         </motion.div>
 
-        {/* Quick Stats Grid */}
+        {/* Stats Grid */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1, duration: 0.6 }}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8"
         >
-          {/* Students Stats */}
-          <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-3">
-                <Users className="h-8 w-8 text-blue-600" />
-                <div>
-                  <div className="text-2xl font-bold text-gray-900">
-                    {admin?.systemStats?.totalStudents || 0}
-                  </div>
-                  <div className="text-sm text-gray-600">Total Students</div>
-                </div>
-              </div>
-              <Link to="/admin/students">
-                <Button variant="outline" size="sm">View All</Button>
-              </Link>
-            </div>
-            <div className="flex justify-between text-sm">
-              <span className="text-green-600">Active: {admin?.systemStats?.activeStudents || 0}</span>
-              <span className="text-red-600">Inactive: {admin?.systemStats?.inactiveStudents || 0}</span>
-            </div>
-          </div>
-
-          {/* Instructors Stats */}
-          <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-3">
-                <GraduationCap className="h-8 w-8 text-purple-600" />
-                <div>
-                  <div className="text-2xl font-bold text-gray-900">
-                    {admin?.systemStats?.totalInstructors || 0}
-                  </div>
-                  <div className="text-sm text-gray-600">Total Instructors</div>
-                </div>
-              </div>
-              <Link to="/admin/instructors">
-                <Button variant="outline" size="sm">View All</Button>
-              </Link>
-            </div>
-            <div className="flex justify-between text-sm">
-              <span className="text-green-600">Active: {admin?.systemStats?.activeInstructors || 0}</span>
-              <span className="text-red-600">Inactive: {admin?.systemStats?.inactiveInstructors || 0}</span>
-            </div>
-          </div>
-
-          {/* Courses Stats */}
-          <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-3">
-                <BookOpen className="h-8 w-8 text-green-600" />
-                <div>
-                  <div className="text-2xl font-bold text-gray-900">
-                    {admin?.systemStats?.totalCourses || 0}
-                  </div>
-                  <div className="text-sm text-gray-600">Total Courses</div>
-                </div>
-              </div>
-              <Link to="/admin/courses">
-                <Button variant="outline" size="sm">View All</Button>
-              </Link>
-            </div>
-            <div className="flex justify-between text-sm">
-              <span className="text-green-600">Active: {admin?.systemStats?.activeCourses || 0}</span>
-              <span className="text-blue-600">Completed: {admin?.systemStats?.completedCourses || 0}</span>
-            </div>
-          </div>
-
-          {/* Revenue Stats */}
-          <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-3">
-                <DollarSign className="h-8 w-8 text-green-600" />
-                <div>
-                  <div className="text-2xl font-bold text-gray-900">
-                    {formatCurrency(admin?.systemStats?.totalRevenue || 0)}
-                  </div>
-                  <div className="text-sm text-gray-600">Total Revenue</div>
-                </div>
-              </div>
-              <Link to="/admin/revenue">
-                <Button variant="outline" size="sm">Details</Button>
-              </Link>
-            </div>
-            <div className="text-sm text-green-600">
-              Monthly: {formatCurrency(admin?.systemStats?.monthlyRevenue || 0)}
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Performance Metrics */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.6 }}
-          className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8"
-        >
+          {/* Total Revenue */}
           <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
             <div className="flex items-center gap-3">
-              <TrendingUp className="h-8 w-8 text-indigo-600" />
+              <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                <DollarSign className="h-6 w-6 text-green-600" />
+              </div>
               <div>
                 <div className="text-2xl font-bold text-gray-900">
-                  {admin?.systemStats?.averageProgress || 0}%
+                  {formatCurrency(systemStats.totalRevenue)}
                 </div>
-                <div className="text-sm text-gray-600">Avg Progress</div>
+                <div className="text-sm text-gray-600">Total Revenue</div>
+                <div className="text-xs text-green-600 font-medium">
+                  +{systemStats.revenueGrowth}% this month
+                </div>
               </div>
             </div>
           </div>
 
+          {/* Active Students */}
           <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
             <div className="flex items-center gap-3">
-              <CheckCircle className="h-8 w-8 text-green-600" />
+              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                <Users className="h-6 w-6 text-blue-600" />
+              </div>
               <div>
                 <div className="text-2xl font-bold text-gray-900">
-                  {admin?.systemStats?.completionRate || 0}%
+                  {systemStats.activeStudents}
+                </div>
+                <div className="text-sm text-gray-600">Active Students</div>
+                <div className="text-xs text-blue-600 font-medium">
+                  {systemStats.newStudentsThisMonth} new this month
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Total Instructors */}
+          <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                <GraduationCap className="h-6 w-6 text-purple-600" />
+              </div>
+              <div>
+                <div className="text-2xl font-bold text-gray-900">
+                  {systemStats.totalInstructors}
+                </div>
+                <div className="text-sm text-gray-600">Total Instructors</div>
+                <div className="text-xs text-purple-600 font-medium">
+                  {systemStats.activeInstructors} active
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Course Completion Rate */}
+          <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
+                <TrendingUp className="h-6 w-6 text-orange-600" />
+              </div>
+              <div>
+                <div className="text-2xl font-bold text-gray-900">
+                  {systemStats.completionRate}%
                 </div>
                 <div className="text-sm text-gray-600">Completion Rate</div>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-            <div className="flex items-center gap-3">
-              <UserCheck className="h-8 w-8 text-blue-600" />
-              <div>
-                <div className="text-2xl font-bold text-gray-900">
-                  {admin?.systemStats?.recentSignups || 0}
+                <div className="text-xs text-orange-600 font-medium">
+                  +{systemStats.completionGrowth}% this month
                 </div>
-                <div className="text-sm text-gray-600">New Signups</div>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-            <div className="flex items-center gap-3">
-              <AlertCircle className="h-8 w-8 text-orange-600" />
-              <div>
-                <div className="text-2xl font-bold text-gray-900">
-                  {admin?.systemStats?.supportTickets || 0}
-                </div>
-                <div className="text-sm text-gray-600">Support Tickets</div>
               </div>
             </div>
           </div>
@@ -287,7 +214,7 @@ const AdminDashboard = () => {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.6 }}
+              transition={{ delay: 0.2, duration: 0.6 }}
               className="bg-white rounded-xl shadow-sm border border-gray-100"
             >
               <div className="p-6 border-b border-gray-100">
@@ -297,76 +224,54 @@ const AdminDashboard = () => {
                     <Link to="/admin/students">
                       <Button variant="outline" size="sm">View All</Button>
                     </Link>
-                    <Link to="/admin/students/assign">
-                      <Button size="sm" icon={Plus}>Assign Student</Button>
+                    <Link to="/admin/students/add">
+                      <Button size="sm" icon={Plus}>Add Student</Button>
                     </Link>
                   </div>
                 </div>
               </div>
 
               <div className="p-6">
-                <div className="overflow-x-auto">
-                  <table className="min-w-full">
-                    <thead className="bg-gray-50">
-                      <tr>
-                        <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Student</th>
-                        <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Instructor</th>
-                        <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Progress</th>
-                        <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
-                        <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-gray-200">
-                      {recentStudents.map((student, index) => (
-                        <motion.tr
-                          key={student.id}
-                          initial={{ opacity: 0, x: -20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: 0.1 * index, duration: 0.4 }}
-                          className="hover:bg-gray-50"
-                        >
-                          <td className="px-4 py-3">
-                            <div className="flex items-center">
-                              <div className="text-2xl mr-3">{student.avatar}</div>
-                              <div>
-                                <div className="font-medium text-gray-900">{student.name}</div>
-                                <div className="text-sm text-gray-600">{student.email}</div>
-                              </div>
-                            </div>
-                          </td>
-                          <td className="px-4 py-3">
-                            <div className="text-sm text-gray-900">{student.instructor}</div>
-                          </td>
-                          <td className="px-4 py-3">
-                            <div className="flex items-center">
-                              <div className="w-16 bg-gray-200 rounded-full h-2 mr-2">
-                                <div
-                                  className="bg-blue-600 h-2 rounded-full"
-                                  style={{ width: `${student.progress}%` }}
-                                />
-                              </div>
-                              <span className="text-sm text-gray-600">{student.progress}%</span>
-                            </div>
-                          </td>
-                          <td className="px-4 py-3">
-                            <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(student.status)}`}>
-                              {student.status}
-                            </span>
-                          </td>
-                          <td className="px-4 py-3">
-                            <Link to={`/admin/students/${student.id}`}>
-                              <Button variant="outline" size="sm">View</Button>
-                            </Link>
-                          </td>
-                        </motion.tr>
-                      ))}
-                    </tbody>
-                  </table>
+                <div className="space-y-4">
+                  {recentStudents.map((student, index) => (
+                    <motion.div
+                      key={student.id}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.1 * index, duration: 0.4 }}
+                      className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:border-primary-200 transition-colors"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="text-2xl">{student.avatar}</div>
+                        <div>
+                          <div className="font-medium text-gray-900">{student.name}</div>
+                          <div className="text-sm text-gray-600">{student.email}</div>
+                          <div className="text-xs text-gray-500">
+                            Progress: {student.progress}% • {student.instructor}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <div className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                          student.status === 'active' 
+                            ? 'text-green-600 bg-green-100' 
+                            : student.status === 'pending'
+                            ? 'text-yellow-600 bg-yellow-100'
+                            : 'text-red-600 bg-red-100'
+                        }`}>
+                          {student.status}
+                        </div>
+                        <div className="text-sm text-gray-600 mt-1">
+                          {formatDate(student.enrollmentDate)}
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
                 </div>
               </div>
             </motion.div>
 
-            {/* Recent Instructors */}
+            {/* Instructors Overview */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -392,24 +297,19 @@ const AdminDashboard = () => {
                   {recentInstructors.map((instructor, index) => (
                     <motion.div
                       key={instructor.id}
-                      initial={{ opacity: 0, scale: 0.95 }}
-                      animate={{ opacity: 1, scale: 1 }}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.1 * index, duration: 0.4 }}
                       className="border border-gray-200 rounded-lg p-4 hover:border-primary-200 transition-colors"
                     >
-                      <div className="flex items-start justify-between mb-3">
-                        <div className="flex items-center">
-                          <div className="text-2xl mr-3">{instructor.avatar}</div>
-                          <div>
-                            <h3 className="font-semibold text-gray-900">{instructor.name}</h3>
-                            <p className="text-sm text-gray-600">{instructor.specialization}</p>
-                          </div>
+                      <div className="flex items-center gap-3 mb-3">
+                        <div className="text-2xl">{instructor.avatar}</div>
+                        <div>
+                          <div className="font-medium text-gray-900">{instructor.name}</div>
+                          <div className="text-xs text-gray-500">{instructor.specialization}</div>
                         </div>
-                        <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(instructor.status)}`}>
-                          {instructor.status}
-                        </span>
                       </div>
-                      <div className="grid grid-cols-2 gap-4 text-sm">
+                      <div className="text-xs text-gray-600 space-y-1">
                         <div>
                           <span className="text-gray-500">Students:</span>
                           <span className="ml-1 font-medium">{instructor.totalStudents}</span>
@@ -445,7 +345,7 @@ const AdminDashboard = () => {
               </div>
               <div className="p-6 space-y-3">
                 <Link to="/admin/students/add">
-                  <Button variant="outline" size="sm" className="w-full" icon={Plus}>
+                  <Button variant="outline" size="sm" className="w-full" icon={Users}>
                     Add New Student
                   </Button>
                 </Link>
@@ -455,23 +355,18 @@ const AdminDashboard = () => {
                   </Button>
                 </Link>
                 <Link to="/admin/students/assign">
-                  <Button variant="outline" size="sm" className="w-full" icon={Users}>
-                    Assign Student to Instructor
+                  <Button variant="outline" size="sm" className="w-full" icon={User}>
+                    Assign Students
                   </Button>
                 </Link>
                 <Link to="/admin/courses/add">
                   <Button variant="outline" size="sm" className="w-full" icon={BookOpen}>
-                    Create New Course
+                    Create Course
                   </Button>
                 </Link>
                 <Link to="/admin/reports">
                   <Button variant="outline" size="sm" className="w-full" icon={BarChart3}>
-                    Generate Reports
-                  </Button>
-                </Link>
-                <Link to="/admin/settings">
-                  <Button variant="outline" size="sm" className="w-full" icon={Settings}>
-                    System Settings
+                    View Reports
                   </Button>
                 </Link>
               </div>
@@ -485,24 +380,28 @@ const AdminDashboard = () => {
               className="bg-white rounded-xl shadow-sm border border-gray-100"
             >
               <div className="p-6 border-b border-gray-100">
-                <h3 className="text-lg font-bold text-gray-900">Recent Activity</h3>
+                <h3 className="text-lg font-bold text-gray-900">Recent Activities</h3>
               </div>
-              <div className="p-6 space-y-4 max-h-96 overflow-y-auto">
-                {recentActivities.map((activity, index) => (
-                  <div key={activity.id} className="flex items-start gap-3">
-                    {getActivityIcon(activity.type)}
-                    <div className="flex-1">
-                      <p className="text-sm text-gray-900">{activity.message}</p>
-                      <p className="text-xs text-gray-500 mt-1">
-                        {formatDate(activity.timestamp)}
-                      </p>
+              <div className="p-6">
+                <div className="space-y-4 max-h-96 overflow-y-auto">
+                  {recentActivities.map((activity, index) => (
+                    <div key={activity.id} className="flex items-start gap-3">
+                      {getActivityIcon(activity.type)}
+                      <div className="flex-1 min-w-0">
+                        <div className="text-sm text-gray-900">
+                          {activity.description}
+                        </div>
+                        <div className="text-xs text-gray-500">
+                          {formatDate(activity.timestamp)}
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </motion.div>
 
-            {/* System Health */}
+            {/* System Status */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -515,30 +414,38 @@ const AdminDashboard = () => {
               <div className="p-6 space-y-4">
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-gray-600">Server Status</span>
-                  <div className="flex items-center">
-                    <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
-                    <span className="text-sm text-green-600">Online</span>
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                    <span className="text-sm font-medium text-green-600">Online</span>
                   </div>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-gray-600">Database</span>
-                  <div className="flex items-center">
-                    <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
-                    <span className="text-sm text-green-600">Connected</span>
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                    <span className="text-sm font-medium text-green-600">Connected</span>
                   </div>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600">Pending Actions</span>
-                  <span className="text-sm font-medium text-orange-600">
-                    {admin?.systemStats?.pendingApprovals || 0}
-                  </span>
+                  <span className="text-sm text-gray-600">Payment Gateway</span>
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                    <span className="text-sm font-medium text-green-600">Active</span>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-gray-600">Email Service</span>
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
+                    <span className="text-sm font-medium text-yellow-600">Limited</span>
+                  </div>
                 </div>
               </div>
             </motion.div>
           </div>
         </div>
       </div>
-    </div>
+    </PortalLayout>
   );
 };
 
