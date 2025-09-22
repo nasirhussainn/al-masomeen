@@ -16,25 +16,34 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import Button from '../../components/ui/Button';
+import PortalLayout from '../../components/common/PortalLayout';
 
 const StudentCourseDetail = () => {
   const { courseId } = useParams();
-  const { student, markAssignmentComplete } = useAuth();
+  const { student, markAssignmentComplete, logout } = useAuth();
   
   const course = student?.enrolledCourses?.find(c => c.id === parseInt(courseId));
 
   if (!course) {
     return (
-      <div className="min-h-screen bg-gray-50 pt-20 flex items-center justify-center">
-        <div className="text-center">
-          <BookOpen className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-          <h2 className="text-xl font-medium text-gray-900 mb-2">Course not found</h2>
-          <p className="text-gray-600 mb-4">The course you're looking for doesn't exist.</p>
-          <Link to="/student/courses">
-            <Button>Back to My Courses</Button>
-          </Link>
+      <PortalLayout
+        portalType="student"
+        portalTitle="Student Portal"
+        portalIcon="🏛️"
+        user={student}
+        onLogout={logout}
+      >
+        <div className="flex items-center justify-center py-20">
+          <div className="text-center">
+            <BookOpen className="h-16 w-16 text-gray-400 mx-auto mb-4" />
+            <h2 className="text-xl font-medium text-gray-900 mb-2">Course not found</h2>
+            <p className="text-gray-600 mb-4">The course you're looking for doesn't exist.</p>
+            <Link to="/student/courses">
+              <Button>Back to My Courses</Button>
+            </Link>
+          </div>
         </div>
-      </div>
+      </PortalLayout>
     );
   }
 
@@ -93,8 +102,14 @@ const StudentCourseDetail = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 pt-20">
-      <div className="max-w-6xl mx-auto container-padding py-8">
+    <PortalLayout
+      portalType="student"
+      portalTitle="Student Portal"
+      portalIcon="🏛️"
+      user={student}
+      onLogout={logout}
+    >
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Back Button */}
         <Link 
           to="/student/courses"
@@ -387,7 +402,7 @@ const StudentCourseDetail = () => {
           </div>
         </div>
       </div>
-    </div>
+    </PortalLayout>
   );
 };
 

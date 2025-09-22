@@ -11,9 +11,10 @@ import {
 } from 'lucide-react';
 import { useAdminAuth } from '../../contexts/AdminAuthContext';
 import Button from '../../components/ui/Button';
+import PortalLayout from '../../components/common/PortalLayout';
 
 const AddInstructor = () => {
-  const { addInstructor } = useAdminAuth();
+  const { addInstructor, logout } = useAdminAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -94,25 +95,13 @@ const AddInstructor = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Navigation Header */}
-      <nav className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
-              <Link to="/admin/instructors" className="flex items-center text-gray-600 hover:text-gray-900 transition-colors mr-4">
-                <ArrowLeft className="h-5 w-5 mr-1" />
-                Back to Instructors
-              </Link>
-              <div className="w-8 h-8 bg-gradient-to-r from-primary-600 to-secondary-600 rounded-lg flex items-center justify-center mr-3">
-                <span className="text-white text-lg">🏛️</span>
-              </div>
-              <span className="text-xl font-bold text-gray-900">Add New Instructor</span>
-            </div>
-          </div>
-        </div>
-      </nav>
-
+    <PortalLayout
+      portalType="admin"
+      portalTitle="Admin Portal"
+      portalIcon="🏛️"
+      user={{ name: "Admin" }}
+      onLogout={logout}
+    >
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -319,7 +308,7 @@ const AddInstructor = () => {
           </form>
         </motion.div>
       </div>
-    </div>
+    </PortalLayout>
   );
 };
 

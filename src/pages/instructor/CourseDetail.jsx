@@ -16,10 +16,11 @@ import {
 } from 'lucide-react';
 import { useInstructorAuth } from '../../contexts/InstructorAuthContext';
 import Button from '../../components/ui/Button';
+import PortalLayout from '../../components/common/PortalLayout';
 
 const CourseDetail = () => {
   const { courseId } = useParams();
-  const { instructor, gradeAssignment } = useInstructorAuth();
+  const { instructor, gradeAssignment, logout } = useInstructorAuth();
   const [activeTab, setActiveTab] = useState('overview');
   const [gradeModal, setGradeModal] = useState(null);
   const [gradeForm, setGradeForm] = useState({ grade: '', feedback: '' });
@@ -28,16 +29,24 @@ const CourseDetail = () => {
 
   if (!course) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">Course Not Found</h1>
-          <Link to="/instructor/dashboard">
-            <Button variant="primary" icon={ArrowLeft}>
-              Back to Dashboard
-            </Button>
-          </Link>
+      <PortalLayout
+        portalType="instructor"
+        portalTitle="Instructor Portal"
+        portalIcon="🏛️"
+        user={instructor}
+        onLogout={logout}
+      >
+        <div className="flex items-center justify-center py-20">
+          <div className="text-center">
+            <h1 className="text-2xl font-bold text-gray-900 mb-2">Course Not Found</h1>
+            <Link to="/instructor/dashboard">
+              <Button variant="primary" icon={ArrowLeft}>
+                Back to Dashboard
+              </Button>
+            </Link>
+          </div>
         </div>
-      </div>
+      </PortalLayout>
     );
   }
 
@@ -92,37 +101,13 @@ const CourseDetail = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Navigation */}
-      <nav className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
-              <Link to="/instructor/dashboard" className="mr-4">
-                <ArrowLeft className="h-5 w-5 text-gray-600 hover:text-gray-900" />
-              </Link>
-              <div className="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center mr-3">
-                <span className="text-white text-lg">🏛️</span>
-              </div>
-              <div>
-                <span className="text-xl font-bold text-gray-900">{course.title}</span>
-                <p className="text-sm text-gray-600">{course.students?.length || 0} students</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-4">
-              <button
-                onClick={() => window.open(course.channelLink, '_blank')}
-                className="flex items-center gap-2 px-3 py-2 text-sm border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
-              >
-                <span>{getCommunicationIcon(course.communicationChannel)}</span>
-                Start Class
-                <ExternalLink className="h-3 w-3" />
-              </button>
-            </div>
-          </div>
-        </div>
-      </nav>
-
+    <PortalLayout
+      portalType="instructor"
+      portalTitle="Instructor Portal"
+      portalIcon="🏛️"
+      user={instructor}
+      onLogout={logout}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Course Stats */}
         <motion.div
@@ -454,7 +439,7 @@ const CourseDetail = () => {
           </motion.div>
         </div>
       )}
-    </div>
+    </PortalLayout>
   );
 };
 
