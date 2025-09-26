@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Mail, Lock, Eye, EyeOff, User } from 'lucide-react';
+import { Mail, Lock, Eye, EyeOff, User, GraduationCap } from 'lucide-react';
 import { useInstructorAuth } from '../../contexts/InstructorAuthContext';
 import Button from '../../components/ui/Button';
 
@@ -63,7 +63,7 @@ const InstructorLogin = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-secondary-900 via-primary-900 to-accent-900 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-primary-900 via-primary-800 to-accent-800 flex items-center justify-center p-4">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -73,7 +73,7 @@ const InstructorLogin = () => {
         {/* Logo and Title */}
         <div className="text-center mb-8">
           <div className="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center mx-auto mb-4 backdrop-blur-sm">
-            <span className="text-3xl">🏛️</span>
+            <span className="text-3xl">🎓</span>
           </div>
           <h1 className="text-3xl font-playfair font-bold text-white mb-2">Instructor Portal</h1>
           <p className="text-white/80">Access your teaching dashboard</p>
@@ -154,7 +154,7 @@ const InstructorLogin = () => {
               disabled={isLogging}
               icon={isLogging ? null : User}
             >
-              {isLogging ? 'Signing In...' : 'Sign In as Instructor'}
+              {isLogging ? 'Signing In...' : 'Sign In'}
             </Button>
 
             {/* Demo Button */}
@@ -171,9 +171,13 @@ const InstructorLogin = () => {
           <div className="mt-6 pt-6 border-t border-gray-200">
             <div className="text-center">
               <p className="text-sm text-gray-600 mb-3">Need instructor access?</p>
-              <p className="text-xs text-gray-500">
-                Contact your administrator for account setup
-              </p>
+              <a
+                href="/contact"
+                className="inline-flex items-center gap-2 text-primary-600 hover:text-primary-800 font-medium text-sm transition-colors"
+              >
+                <GraduationCap className="h-4 w-4" />
+                Contact Administrator
+              </a>
             </div>
           </div>
         </motion.div>

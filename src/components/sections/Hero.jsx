@@ -1,25 +1,31 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { ArrowRight, Play, BookOpen, Users, Award } from 'lucide-react';
-import Button from '../ui/Button';
+import React from "react";
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import { ArrowRight, Play, BookOpen, Users, Award } from "lucide-react";
+import Button from "../ui/Button";
 
 const Hero = () => {
   const stats = [
-    { icon: Users, value: '500+', label: 'Students' },
-    { icon: BookOpen, value: '20+', label: 'Courses' },
-    { icon: Award, value: '15+', label: 'Instructors' },
+    { icon: Users, value: "500+", label: "Students" },
+    { icon: BookOpen, value: "20+", label: "Courses" },
+    { icon: Award, value: "15+", label: "Instructors" },
   ];
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-primary-900 via-primary-800 to-accent-800">
       {/* Background Pattern */}
       <div className="absolute inset-0 geometric-pattern opacity-20"></div>
-      
+
       {/* Floating Elements */}
       <div className="absolute top-20 left-10 w-20 h-20 bg-secondary-400/20 rounded-full blur-xl animate-float"></div>
-      <div className="absolute bottom-32 right-16 w-32 h-32 bg-accent-400/20 rounded-full blur-xl animate-float" style={{animationDelay: '1s'}}></div>
-      <div className="absolute top-1/2 left-1/4 w-16 h-16 bg-primary-400/20 rounded-full blur-xl animate-float" style={{animationDelay: '2s'}}></div>
+      <div
+        className="absolute bottom-32 right-16 w-32 h-32 bg-accent-400/20 rounded-full blur-xl animate-float"
+        style={{ animationDelay: "1s" }}
+      ></div>
+      <div
+        className="absolute top-1/2 left-1/4 w-16 h-16 bg-primary-400/20 rounded-full blur-xl animate-float"
+        style={{ animationDelay: "2s" }}
+      ></div>
 
       <div className="relative z-10 max-w-7xl mx-auto container-padding">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -36,26 +42,29 @@ const Hero = () => {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="inline-block mb-4 px-4 py-2 bg-secondary-500/20 rounded-full border border-secondary-400/30"
             >
-              <span className="text-secondary-300 font-medium">🌙 Welcome to Al-Masomeen</span>
+              <span className="text-secondary-300 font-medium">
+                🌙 Welcome to Al-Masomeen
+              </span>
             </motion.div>
 
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-playfair font-bold text-white mb-6 leading-tight">
-              Learn the{' '}
+              Learn the{" "}
               <span className="text-gradient bg-gradient-to-r from-secondary-400 to-accent-400 bg-clip-text text-transparent">
                 Holy Quran
-              </span>{' '}
+              </span>{" "}
               with Traditional Values
             </h1>
 
             <p className="text-xl text-gray-300 mb-8 leading-relaxed max-w-2xl">
-              Join our authentic Islamic learning platform where traditional scholarship meets modern teaching methods. 
-              Experience personalized Quranic education from certified instructors.
+              Join our authentic Islamic learning platform where traditional
+              scholarship meets modern teaching methods. Experience personalized
+              Quranic education from certified instructors.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 mb-12">
               <Link to="/courses">
-                <Button 
-                  size="lg" 
+                <Button
+                  size="lg"
                   variant="secondary"
                   icon={ArrowRight}
                   className="group"
@@ -64,14 +73,14 @@ const Hero = () => {
                   <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
                 </Button>
               </Link>
-              
+
               <Link to="/book-demo">
-                <Button 
-                  size="lg" 
+                <Button
+                  size="lg"
                   variant="outline"
-                  icon={Play}
-                  className="border-white text-white hover:bg-white hover:text-primary-800"
+                  className="border-white text-white hover:bg-green hover:text-primary-800 flex items-center gap-2"
                 >
+                  <Play className="w-5 h-5" />
                   Watch Demo
                 </Button>
               </Link>
@@ -112,7 +121,9 @@ const Hero = () => {
                   <h3 className="text-2xl font-playfair font-bold text-white mb-2">
                     بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ
                   </h3>
-                  <p className="text-gray-300">In the name of Allah, the Most Gracious, the Most Merciful</p>
+                  <p className="text-gray-300">
+                    In the name of Allah, the Most Gracious, the Most Merciful
+                  </p>
                 </div>
               </div>
 
