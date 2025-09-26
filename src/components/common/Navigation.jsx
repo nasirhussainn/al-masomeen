@@ -19,7 +19,7 @@ const Navigation = () => {
     { name: 'Blog', href: '/blog', icon: FileText },
     { name: 'FAQ', href: '/faq', icon: HelpCircle },
     { name: 'Contact', href: '/contact', icon: Phone },
-    { name: 'Become Instructor', href: '/instructor-contact', icon: User }
+    { name: 'Instructor', href: '/instructor-contact', icon: User }
   ];
 
   const studentNavigationItems = [
@@ -52,7 +52,7 @@ const Navigation = () => {
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled 
           ? 'bg-white/95 backdrop-blur-lg shadow-lg border-b border-primary-100' 
-          : 'bg-transparent'
+          : 'bg-black/20 backdrop-blur-sm'
       }`}
     >
       <div className="max-w-7xl mx-auto container-padding">
@@ -81,30 +81,32 @@ const Navigation = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-8">
+          <div className="hidden lg:flex items-center space-x-6">
             {(isAuthenticated ? studentNavigationItems : navigationItems).map((item) => {
               const isActive = location.pathname === item.href;
               return (
                 <Link
                   key={item.name}
                   to={item.href}
-                  className={`relative font-medium transition-colors duration-300 ${
+                  className={`relative font-medium transition-all duration-300 px-3 py-2 rounded-lg hover:scale-105 ${
                     scrolled
                       ? isActive
-                        ? 'text-primary-800'
-                        : 'text-charcoal hover:text-primary-800'
+                        ? 'text-primary-800 bg-primary-50'
+                        : 'text-charcoal hover:text-primary-800 hover:bg-primary-50'
                       : isActive
-                        ? 'text-secondary-400'
-                        : 'text-white hover:text-secondary-400'
+                        ? 'text-secondary-400 bg-white/20 backdrop-blur-sm'
+                        : 'text-white/90 hover:text-secondary-400 hover:bg-white/10 backdrop-blur-sm'
                   }`}
                 >
                   {item.name}
                   {isActive && (
                     <motion.div
                       layoutId="activeTab"
-                      className={`absolute -bottom-1 left-0 right-0 h-0.5 ${
+                      className={`absolute -bottom-1 left-3 right-3 h-0.5 rounded-full ${
                         scrolled ? 'bg-primary-800' : 'bg-secondary-400'
                       }`}
+                      initial={false}
+                      transition={{ type: "spring", stiffness: 400, damping: 30 }}
                     />
                   )}
                 </Link>
@@ -116,8 +118,8 @@ const Navigation = () => {
           <div className="flex items-center gap-4">
             {isAuthenticated ? (
               <div className="hidden md:flex items-center gap-4">
-                <div className={`flex items-center gap-2 ${
-                  scrolled ? 'text-charcoal' : 'text-white'
+                <div className={`flex items-center gap-2 px-3 py-2 rounded-lg backdrop-blur-sm ${
+                  scrolled ? 'text-charcoal bg-gray-50' : 'text-white bg-white/10'
                 }`}>
                   <span className="text-lg">{student?.avatar}</span>
                   <span className="text-sm font-medium">{student?.name}</span>
@@ -127,6 +129,7 @@ const Navigation = () => {
                   size="sm"
                   icon={LogOut}
                   onClick={logout}
+                  className="backdrop-blur-sm"
                 >
                   Logout
                 </Button>
@@ -136,8 +139,9 @@ const Navigation = () => {
                 <Link to="/student/login">
                   <Button 
                     variant={scrolled ? "outline" : "secondary"}
-                    size="md"
+                    size="sm"
                     icon={User}
+                    className="backdrop-blur-sm"
                   >
                     Student Login
                   </Button>
@@ -145,8 +149,9 @@ const Navigation = () => {
                 <Link to="/book-demo">
                   <Button 
                     variant={scrolled ? "primary" : "secondary"}
-                    size="md"
+                    size="sm"
                     icon={Calendar}
+                    className="backdrop-blur-sm hover:scale-105 transition-transform"
                   >
                     Book Free Trial
                   </Button>
@@ -157,13 +162,18 @@ const Navigation = () => {
             {/* Mobile Menu Button */}
             <button
               onClick={toggleMenu}
-              className={`lg:hidden p-2 rounded-lg transition-colors ${
+              className={`lg:hidden p-2 rounded-lg transition-all duration-300 backdrop-blur-sm hover:scale-110 ${
                 scrolled 
-                  ? 'text-charcoal hover:bg-primary-50' 
-                  : 'text-white hover:bg-white/10'
+                  ? 'text-charcoal hover:bg-primary-50 border border-gray-200' 
+                  : 'text-white hover:bg-white/20 border border-white/30'
               }`}
             >
-              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              <motion.div
+                animate={{ rotate: isOpen ? 180 : 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              </motion.div>
             </button>
           </div>
         </div>
@@ -173,45 +183,71 @@ const Navigation = () => {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
+            initial={{ opacity: 0, height: 0, y: -20 }}
+            animate={{ opacity: 1, height: 'auto', y: 0 }}
+            exit={{ opacity: 0, height: 0, y: -20 }}
+            transition={{ duration: 0.4, ease: "easeInOut" }}
             className="lg:hidden bg-white/95 backdrop-blur-lg border-t border-primary-100 shadow-xl"
           >
             <div className="container-padding py-6">
-              <div className="space-y-4">
-                {(isAuthenticated ? studentNavigationItems : navigationItems).map((item) => {
+              <div className="space-y-2">
+                {(isAuthenticated ? studentNavigationItems : navigationItems).map((item, index) => {
                   const isActive = location.pathname === item.href;
                   const Icon = item.icon;
                   return (
-                    <Link
+                    <motion.div
                       key={item.name}
-                      to={item.href}
-                      onClick={closeMenu}
-                      className={`flex items-center gap-3 p-3 rounded-lg transition-colors ${
-                        isActive
-                          ? 'bg-primary-100 text-primary-800 font-medium'
-                          : 'text-charcoal hover:bg-primary-50'
-                      }`}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.1, duration: 0.3 }}
                     >
-                      <Icon className="h-5 w-5" />
-                      {item.name}
-                    </Link>
+                      <Link
+                        to={item.href}
+                        onClick={closeMenu}
+                        className={`flex items-center gap-3 p-4 rounded-xl transition-all duration-300 hover:scale-[1.02] ${
+                          isActive
+                            ? 'bg-gradient-to-r from-primary-100 to-primary-50 text-primary-800 font-medium shadow-sm'
+                            : 'text-charcoal hover:bg-primary-50 hover:text-primary-700'
+                        }`}
+                      >
+                        <div className={`p-2 rounded-lg ${
+                          isActive ? 'bg-primary-200 text-primary-800' : 'bg-gray-100 text-gray-600'
+                        }`}>
+                          <Icon className="h-4 w-4" />
+                        </div>
+                        <span className="font-medium">{item.name}</span>
+                        {isActive && (
+                          <motion.div
+                            layoutId="activeMobileTab"
+                            className="ml-auto w-2 h-2 bg-primary-600 rounded-full"
+                          />
+                        )}
+                      </Link>
+                    </motion.div>
                   );
                 })}
                 
-                <div className="pt-4 border-t border-primary-200">
+                <motion.div 
+                  className="pt-4 border-t border-primary-200"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.3, duration: 0.3 }}
+                >
                   {isAuthenticated ? (
                     <div className="space-y-3">
-                      <div className="flex items-center gap-2 px-3 py-2">
-                        <span className="text-lg">{student?.avatar}</span>
-                        <span className="text-sm font-medium text-charcoal">{student?.name}</span>
+                      <div className="flex items-center gap-3 px-4 py-3 bg-gradient-to-r from-gray-50 to-primary-50 rounded-xl">
+                        <div className="p-2 bg-white rounded-lg shadow-sm">
+                          <span className="text-lg">{student?.avatar}</span>
+                        </div>
+                        <div>
+                          <p className="text-sm font-medium text-charcoal">{student?.name}</p>
+                          <p className="text-xs text-gray-500">Student Account</p>
+                        </div>
                       </div>
                       <Button 
                         variant="outline" 
                         size="lg" 
-                        className="w-full"
+                        className="w-full hover:scale-[1.02] transition-transform"
                         icon={LogOut}
                         onClick={() => {
                           logout();
@@ -227,7 +263,7 @@ const Navigation = () => {
                         <Button 
                           variant="outline" 
                           size="lg" 
-                          className="w-full"
+                          className="w-full hover:scale-[1.02] transition-transform"
                           icon={User}
                         >
                           Student Login
@@ -237,7 +273,7 @@ const Navigation = () => {
                         <Button 
                           variant="primary" 
                           size="lg" 
-                          className="w-full"
+                          className="w-full hover:scale-[1.02] transition-transform bg-gradient-to-r from-primary-600 to-primary-700"
                           icon={Calendar}
                         >
                           Book Free Trial Class
@@ -245,7 +281,7 @@ const Navigation = () => {
                       </Link>
                     </div>
                   )}
-                </div>
+                </motion.div>
               </div>
             </div>
           </motion.div>
