@@ -54,7 +54,7 @@ const CallToAction = () => {
               <Button 
                 size="lg" 
                 variant="outline"
-                className="border-white text-white hover:bg-white hover:text-primary-800"
+                className="border-white text-white hover:text-primary-800"
               >
                 <Users className="mr-2 h-5 w-5" />
                 Join Our Community
