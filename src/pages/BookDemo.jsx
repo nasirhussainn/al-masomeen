@@ -15,7 +15,19 @@ const BookDemo = () => {
     preferredTime: '',
     studentAge: '',
     goals: '',
-    experience: ''
+    experience: '',
+    // Additional fields for comprehensive data collection
+    dateOfBirth: '',
+    nationality: '',
+    country: '',
+    address: '',
+    guardianName: '',
+    guardianEmail: '',
+    guardianPhone: '',
+    hearAboutUs: '',
+    specialRequirements: '',
+    emergencyContact: '',
+    emergencyPhone: ''
   });
 
   const handleInputChange = (e) => {
@@ -269,6 +281,143 @@ const BookDemo = () => {
                           <option value="18+">Adult (18+ years)</option>
                         </select>
                       </div>
+
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          Date of Birth
+                        </label>
+                        <input
+                          type="date"
+                          name="dateOfBirth"
+                          value={formData.dateOfBirth}
+                          onChange={handleInputChange}
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          Nationality
+                        </label>
+                        <input
+                          type="text"
+                          name="nationality"
+                          value={formData.nationality}
+                          onChange={handleInputChange}
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                          placeholder="Your nationality"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          Country
+                        </label>
+                        <input
+                          type="text"
+                          name="country"
+                          value={formData.country}
+                          onChange={handleInputChange}
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                          placeholder="Your country"
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Address (Optional)
+                      </label>
+                      <textarea
+                        name="address"
+                        value={formData.address}
+                        onChange={handleInputChange}
+                        rows="2"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-none"
+                        placeholder="Your full address"
+                      ></textarea>
+                    </div>
+
+                    {/* Guardian Information for minors */}
+                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                      <h4 className="font-medium text-blue-900 mb-3">Guardian/Emergency Contact Information</h4>
+                      <div className="grid md:grid-cols-2 gap-4">
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-2">
+                            Guardian/Emergency Contact Name
+                          </label>
+                          <input
+                            type="text"
+                            name="guardianName"
+                            value={formData.guardianName}
+                            onChange={handleInputChange}
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                            placeholder="Parent/Guardian name"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-2">
+                            Guardian/Emergency Contact Phone
+                          </label>
+                          <input
+                            type="tel"
+                            name="guardianPhone"
+                            value={formData.guardianPhone}
+                            onChange={handleInputChange}
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                            placeholder="+1 (555) 000-0000"
+                          />
+                        </div>
+
+                        <div className="md:col-span-2">
+                          <label className="block text-sm font-medium text-gray-700 mb-2">
+                            Guardian Email (if different from student)
+                          </label>
+                          <input
+                            type="email"
+                            name="guardianEmail"
+                            value={formData.guardianEmail}
+                            onChange={handleInputChange}
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                            placeholder="guardian@email.com"
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        How did you hear about us?
+                      </label>
+                      <select
+                        name="hearAboutUs"
+                        value={formData.hearAboutUs}
+                        onChange={handleInputChange}
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                      >
+                        <option value="">Select an option</option>
+                        <option value="google">Google Search</option>
+                        <option value="social-media">Social Media</option>
+                        <option value="friend">Friend/Family Referral</option>
+                        <option value="website">Direct Website Visit</option>
+                        <option value="advertisement">Advertisement</option>
+                        <option value="other">Other</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Special Requirements or Notes
+                      </label>
+                      <textarea
+                        name="specialRequirements"
+                        value={formData.specialRequirements}
+                        onChange={handleInputChange}
+                        rows="3"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-none"
+                        placeholder="Any special requirements, accessibility needs, or additional information..."
+                      ></textarea>
                     </div>
                   </motion.div>
                 )}

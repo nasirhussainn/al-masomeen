@@ -16,6 +16,7 @@ import FAQ from './pages/FAQ';
 import Blog from './pages/Blog';
 import BlogPost from './pages/BlogPost';
 import CourseDetail from './pages/CourseDetail';
+import Enrollment from './pages/Enrollment';
 import Testimonials from './pages/Testimonials';
 import InstructorContact from './pages/InstructorContact';
 // Student Portal Pages
@@ -70,6 +71,11 @@ function App() {
               <Route path="/book-demo" element={
                 <Layout>
                   <BookDemo />
+                </Layout>
+              } />
+              <Route path="/enrollment" element={
+                <Layout>
+                  <Enrollment />
                 </Layout>
               } />
               <Route path="/contact" element={
