@@ -63,10 +63,10 @@ const About = () => {
                 <div className="text-center">
                   <div className="text-8xl mb-4">🕌</div>
                   <h3 className="text-2xl font-playfair font-bold text-white mb-2">
-                    وَمَا خَلَقْتُ الْجِنَّ وَالْإِنسَ إِلَّا لِيَعْبُدُونِ
+                    وَقُل رَّبِّ زِدْنِي عِلْمًا
                   </h3>
                   <p className="text-gray-300 text-sm max-w-sm">
-                    "And I did not create the jinn and mankind except to worship Me."
+                    "And say: My Lord, increase me in knowledge."
                   </p>
                 </div>
               </div>
