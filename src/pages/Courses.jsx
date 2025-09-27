@@ -1,9 +1,19 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { BookOpen, Clock, Users, Star, Award } from 'lucide-react';
 import Button from '../components/ui/Button';
 
 const Courses = () => {
+  const navigate = useNavigate();
+  
+  const handleEnrollment = (course) => {
+    const params = new URLSearchParams({
+      course: course.title,
+      level: 'beginner' // default level, user can change later
+    });
+    navigate(`/enrollment?${params.toString()}`);
+  };
   const courses = [
     {
       id: 1,
@@ -183,6 +193,7 @@ const Courses = () => {
                     <Button 
                       variant="primary" 
                       className="w-full"
+                      onClick={() => handleEnrollment(course)}
                     >
                       Enroll Now
                     </Button>

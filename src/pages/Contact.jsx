@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { Mail, Phone, MapPin, Clock, Send } from 'lucide-react';
 import Button from '../components/ui/Button';
 
 const Contact = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -234,6 +236,7 @@ const Contact = () => {
                   variant="secondary" 
                   size="lg" 
                   className="w-full"
+                  onClick={() => navigate('/book-demo')}
                 >
                   Book Free Trial
                 </Button>
